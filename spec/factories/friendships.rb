@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :friendship do
-    user nil
-    friend_id 1
+    association :user
+    association :friend, factory: :user 
     accepted false
   end
 end
