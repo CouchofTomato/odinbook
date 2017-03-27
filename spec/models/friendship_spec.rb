@@ -9,7 +9,16 @@ RSpec.describe Friendship, type: :model do
   it "is invalid if not accepted" do
     user = create(:user)
     friend = create(:user)
-    friendship = build(:friendship, user: user, friend: friend, accepted: false)
+    friendship = user.friendships.build(friend: friend, accepted: false)
+    friendship.save
     expect(user.friends).not_to include(friend)
+  end
+
+  it "is valid if accepted" do 
+    user = create(:user)
+    friend = create(:user)
+    friendship = user.friendships.build(friend: friend, accepted: true)
+    friendship.save
+    expect(user.friends).to include(friend)
   end
 end
