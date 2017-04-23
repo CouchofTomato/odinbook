@@ -50,7 +50,7 @@ User.all.each do |user|
     while user2 == user
       user2 = User.all.sample
     end
-    user.friendships.create(friend: user2)
+    user.friendships.create(friend: user2, accepted: true)
   end
 end
 
@@ -59,4 +59,18 @@ Post.all.each do |post|
     user = User.all.sample
     post.comments.create(user: user, content: Faker::Lorem.sentence)
   end
+end
+
+user = User.create(
+    email: Faker::Internet.unique.email,
+    password: "password",
+    password_confirmation: "password"
+  )
+5.times do
+  user2 = User.create(
+    email: Faker::Internet.unique.email,
+    password: "password",
+    password_confirmation: "password"
+  )
+  user.friendships.create(friend: user2)
 end
