@@ -44,9 +44,8 @@ RSpec.describe User, type: :model do
   
   it "has one profile" do
     user = create(:user)
-    profile = user.build_profile(:profile)
+    profile = user.build_profile(attributes_for(:profile))
     profile.save
     expect(profile.user).to eql user
   end
-    
 end
