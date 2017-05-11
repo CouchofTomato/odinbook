@@ -48,4 +48,22 @@ RSpec.describe User, type: :model do
     profile.save
     expect(profile.user).to eql user
   end
+  
+  describe '#newsfeed' do
+    it "returns an array of posts from the user and their friends" do
+      user = create(:user)
+      user.posts.create(attributes_for(:post))
+      3.times do
+        user2 = create(:user)
+        user2.posts.create(attributes_for(:post))
+        user.friendships.create(friend: user2, accepted: true)
+      end
+      3.times do
+        user2 = create(:user)
+        user2.posts.create(attributes_for(:post))
+        user2.friendships.create(friend: user, accepted: true)
+      end
+      expect(user.newsfeed.count).to eql 7
+    end
+  end
 end

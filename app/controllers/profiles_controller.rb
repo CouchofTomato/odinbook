@@ -1,13 +1,4 @@
 class ProfilesController < ApplicationController
-  before_action :authenticate_user!
-
-  def index
-    @profile = Profile.all
-  end
-
-  def new
-    @profile = Profile.new
-  end
 
   def show
     @profile = Profile.find(params[:id])
@@ -24,6 +15,7 @@ class ProfilesController < ApplicationController
       redirect_to user_profile_path
     else
       flash.now[:error] = "You done fucked up pal."
+      render :edit
     end
   end
 

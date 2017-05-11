@@ -7,13 +7,6 @@ RSpec.describe ProfilesController, type: :controller do
     sign_in @user
   end
 
-  describe 'GET #index' do
-    it 'renders the index template' do
-      get :index
-      expect(response).to render_template :index
-    end
-  end
-
   describe 'GET #show' do
     context 'when a user is not signed in' do
       it 'redirects the user to the sign_in path' do 
@@ -38,7 +31,7 @@ RSpec.describe ProfilesController, type: :controller do
       end
     end
   end
-  
+ 
   describe 'GET #edit' do
     it 'assigns the requested Profile to @profile' do
         profile = create(:profile)
@@ -73,6 +66,22 @@ RSpec.describe ProfilesController, type: :controller do
         profile = create(:profile)
         patch :update, params: { id: profile, profile: attributes_for(:profile) }
         expect(response).to redirect_to user_profile_path 
+      end
+    end
+
+    context 'with invalid attributes' do
+      it 'does not change the contacts attributes' do
+        profile = create(:profile, firstname: 'Austin', lastname: 'Mason')
+        patch :update, params: { id: profile, profile: attributes_for(:profile, firstname: 'Kevin', lastname: nil) }
+        profile.reload
+        expect(profile.firstname).not_to eq('Kevin')
+        expect(profile.lastname).to eq('Mason')
+      end
+
+      it 're-renders the edit template' do
+        profile = create(:profile, firstname: 'Austin', lastname: 'Mason')
+        patch :update, params: { id: profile, profile: attributes_for(:profile, firstname: 'Kevin', lastname: nil) }
+        expect(response).to render_template :edit
       end
     end
   end

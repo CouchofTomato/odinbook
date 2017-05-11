@@ -18,8 +18,16 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :liked_posts, through: :likes, source: :post
   has_many :comments, dependent: :destroy
-  
+
   def friends
     requested_friends + inverse_friends
+  end
+  
+  def friends_posts
+    friends.map &:posts
+  end
+
+  def newsfeed
+    (friends_posts << self.posts).flatten.sort_by &:created_at
   end
 end
