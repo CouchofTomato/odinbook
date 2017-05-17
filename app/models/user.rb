@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  after_create :make_profile
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -29,5 +30,11 @@ class User < ApplicationRecord
 
   def newsfeed
     (friends_posts << self.posts).flatten.sort_by &:created_at
+  end
+
+  private
+
+  def make_profile
+    self.build_profile
   end
 end
