@@ -17,12 +17,26 @@ RSpec.describe User, type: :model do
     user.friendships.create(friend: user2, accepted: true)
     expect(user.requested_friends).to include(user2)
   end
+
+  it 'deletes friendships when the user is deleted' do
+    user = create(:user)
+    user2 = create(:user)
+    user.friendships.create(friend: user2, accepted: true)
+    expect { user.destroy }.to change { Friendship.count }.by(-1)
+  end
   
   it "has many pending friends" do
     user = create(:user)
     user2 = create(:user)
     user.friendships.create(friend: user2, accepted: false)
     expect(user.pending_friends).to include(user2)
+  end
+
+  it 'deletes the pending friend request when the user is deleted' do
+    user = create(:user)
+    user2 = create(:user)
+    user.friendships.create(friend: user2)
+    expect { user.destroy }.to change { Friendship.count }.by(-1)
   end
   
   it "has many inverse_friends" do
@@ -31,12 +45,27 @@ RSpec.describe User, type: :model do
     user.friendships.create(friend: user2, accepted: true)
     expect(user2.inverse_friends).to include(user)
   end
+
+  it 'deletes the inverse_friends when the user is deleted' do
+    user = create(:user)
+    user2 = create(:user)
+    user.friendships.create(friend: user2, accepted: true)
+    expect { user2.destroy }.to change { Friendship.count }.by(-1)
+  end
   
   it "has many notifications" do
     user = create(:user)
     user2 = create(:user)
     user.friendships.create(friend: user2, accepted: false)
     expect(user2.notifications).to include(user)
+  end
+
+  it 'deletes the notification when the user is deleted' do
+    user = create(:user)
+    user2 = create(:user)
+    user.friendships.create(friend: user2, accepted: false)
+    user.destroy
+    expect(user2.notifications).not_to include(user)
   end
   
   it "has many friends" do
@@ -46,12 +75,27 @@ RSpec.describe User, type: :model do
     expect(user.friends).to include(user2)
     expect(user2.friends).to include(user)
   end
+
+  it 'deletes the user from another users friends list when the user is destroyed' do
+    user = create(:user)
+    user2 = create(:user)
+    user.friendships.create(friend: user2, accepted: true)
+    user.destroy
+    expect(user2.friends).not_to include(user)
+  end
   
   it "has one profile" do
     user = create(:user)
     profile = user.build_profile(attributes_for(:profile))
     profile.save
     expect(profile.user).to eql user
+  end
+
+  it 'deletes the users profile when the user is deleted' do
+    user = create(:user)
+    profile = user.build_profile(attributes_for(:profile))
+    profile.save
+    expect { user.destroy }.to change { Profile.count }.by(-1)
   end
   
   describe '#newsfeed' do
