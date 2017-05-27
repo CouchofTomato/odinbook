@@ -21,4 +21,9 @@ RSpec.describe Friendship, type: :model do
     friendship.save
     expect(user.friends).to include(friend)
   end
+
+  describe 'validations' do
+    subject { build(:friendship) }
+    it { should validate_uniqueness_of(:user_id).scoped_to(:friend_id) }
+  end
 end

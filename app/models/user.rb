@@ -32,6 +32,10 @@ class User < ApplicationRecord
     (friends_posts << self.posts).flatten.sort_by &:created_at
   end
 
+  def friends?(user)
+    self.friends.include?(user)
+  end
+
   private
 
   def make_profile

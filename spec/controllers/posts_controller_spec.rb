@@ -12,20 +12,25 @@ RSpec.describe PostsController, type: :controller do
     context 'when a user is not signed in' do
       it 'redirects the user to the sign_in path' do
         sign_out @user
-        get :show, params: { id: @post, user_id: @user.id }
+        get :show, params: { id: @post }
         expect(response).to redirect_to(new_user_session_path)
       end
     end
 
     context 'when a user is signed in' do
       it 'renders the show template' do
-        get :show, params: { id: @post, user_id: @user.id }
+        get :show, params: { id: @post }
         expect(response).to render_template :show
       end
 
       it 'assigns the requested post to @post' do
-        get :show, params: { id: @post, user_id: @user.id }
+        get :show, params: { id: @post }
         expect(assigns(:post)).to eql @post
+      end
+
+      it 'assigns the @post comments to @comment' do
+        get :show, params: { id: @post }
+        expect(assigns(:comments)).to eql @comment
       end
     end
   end

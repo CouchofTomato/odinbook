@@ -115,4 +115,24 @@ RSpec.describe User, type: :model do
       expect(user.newsfeed.count).to eql 7
     end
   end
+
+  describe '#friends?' do
+    context 'when the selected user is a friend' do
+      it 'returns true' do
+        user = create(:user)
+        user2 = create(:user)
+        user.friendships.create(friend: user2, accepted: true)
+        expect(user.friends?(user2)).to be true
+      end
+    end
+
+    context 'when the selected user is not a friend' do
+      it 'returns false' do
+        user = create(:user)
+        user2 = create(:user)
+        user.friendships.create(friend: user2, accepted: false)
+        expect(user.friends?(user2)).to be false
+      end
+    end
+  end
 end

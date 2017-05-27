@@ -8,4 +8,8 @@ class Post < ApplicationRecord
   def self.newsfeed(newsfeed_id_list)
     Post.where(id: newsfeed_id_list)
   end
+
+  def author
+    "#{self.user.profile.firstname} #{self.user.profile.lastname}"
+  end
 end
