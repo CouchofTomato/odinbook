@@ -5,7 +5,8 @@ RSpec.describe PostsController, type: :controller do
   before :each do
     @user = create(:user)
     sign_in @user
-    @post = create(:post)
+    @post = create(:post, user: @user)
+    @comments = @post.comments
   end
 
   describe 'GET #show' do
@@ -28,9 +29,9 @@ RSpec.describe PostsController, type: :controller do
         expect(assigns(:post)).to eql @post
       end
 
-      it 'assigns the @post comments to @comment' do
+      it 'assigns the @post comments to @comments' do
         get :show, params: { id: @post }
-        expect(assigns(:comments)).to eql @comment
+        expect(assigns(:comments)).to eql @comments
       end
     end
   end
