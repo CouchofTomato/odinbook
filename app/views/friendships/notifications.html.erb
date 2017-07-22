@@ -1,0 +1,9 @@
+<table>
+  <% @friendships.each do |friend| %>
+    <tr>
+      <td><%= link_to "#{friend.name}", friend.profile %></td>
+      <td><%= link_to "accept", user_friendship_path(friend, friendship: { accepted: true }), method: :patch %></td>
+      <td><%= link_to "reject", user_friendship_path(friend), method: :delete %></td>
+    </tr>
+  <% end %>
+</table

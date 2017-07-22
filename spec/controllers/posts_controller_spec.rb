@@ -2,41 +2,48 @@ require 'rails_helper'
 
 RSpec.describe PostsController, type: :controller do
 
-  before :each do
-    @user = create(:user)
-    sign_in @user
-    @post = create(:post, user: @user)
-    @comments = @post.comments
-  end
+  let(:user) { create(:user) }
+  let(:new_post) { create(:post, user: user) }
+  let(:comments) { create(:comment, post: new_post) }
+  
 
   describe 'GET #show' do
+
+    before :each do
+      sign_in user
+
+      get :show, params: { id: new_post }
+    end
+
     context 'when a user is not signed in' do
       it 'redirects the user to the sign_in path' do
-        sign_out @user
-        get :show, params: { id: @post }
+        sign_out(user)
+        get :show, params: { id: new_post }
         expect(response).to redirect_to(new_user_session_path)
       end
     end
 
     context 'when a user is signed in' do
       it 'renders the show template' do
-        get :show, params: { id: @post }
         expect(response).to render_template :show
       end
 
       it 'assigns the requested post to @post' do
-        get :show, params: { id: @post }
-        expect(assigns(:post)).to eql @post
+        expect(assigns(:post)).to eql new_post
       end
 
       it 'assigns the @post comments to @comments' do
-        get :show, params: { id: @post }
-        expect(assigns(:comments)).to eql @comments
+        expect(assigns(:comments)).to eql comments
       end
     end
   end
 
   describe 'GET #index' do
+
+    before :each do
+      sign_in user
+    end
+
     it 'renders the index template' do
       get :index
       expect(response).to render_template :index
@@ -44,9 +51,9 @@ RSpec.describe PostsController, type: :controller do
 
     it 'populates an array with posts for the user and friends' do
       user2 = create(:user)
-      @user.friendships.create(friend: user2, accepted: true)
+      user.friendships.create(friend: user2, accepted: true)
       3.times do
-        @user.posts.create(attributes_for(:post))
+        user.posts.create(attributes_for(:post))
         user2.posts.create(attributes_for(:post))
       end
       get :index
@@ -55,6 +62,11 @@ RSpec.describe PostsController, type: :controller do
   end
 
   describe 'GET #new' do
+    
+    before :each do
+      sign_in user
+    end
+
     it 'assigns a new Post to @post' do
       get :new
       expect(assigns(:post)).to be_a_new(Post)
@@ -67,18 +79,28 @@ RSpec.describe PostsController, type: :controller do
   end
 
   describe 'GET #edit' do
+    
+    before :each do
+      sign_in user
+    end
+
     it 'assigns the requested Post to @post' do
-      get :edit, params: { id: @post }
-      expect(assigns(:post)).to eq @post
+      get :edit, params: { id: new_post }
+      expect(assigns(:post)).to eq new_post
     end
 
     it 'renders the edit template' do
-      get :edit, params: { id: @post }
+      get :edit, params: { id: new_post }
       expect(response).to render_template :edit
     end
   end
 
   describe 'POST #create' do
+    
+    before :each do
+      sign_in user
+    end
+
     context 'with valid attributes' do
       it 'saves the new post in the database' do
         expect{
@@ -108,8 +130,9 @@ RSpec.describe PostsController, type: :controller do
 
   describe 'PATCH #update' do
     before :each do
+      sign_in user
       @post = create(:post,
-                     user: @user,
+                     user: user,
                      content: "hello spaceman")
     end
     
@@ -148,6 +171,7 @@ RSpec.describe PostsController, type: :controller do
 
   describe 'DELETE #destroy' do
     before :each do
+      sign_in user
       @post = create(:post)
     end
 

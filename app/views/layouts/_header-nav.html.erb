@@ -11,11 +11,14 @@
     </div> <!-- navbar-header -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li>
           <% if user_signed_in? %>
-            <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
-          <% end %>  
-        </li>
+            <li>
+              <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+            </li>
+            <li><%= link_to "Newsfeed", user_posts_path %></li>
+            <li><%= link_to "Friends", user_friendships_path %></li>
+            <li><%= link_to "Notifications: #{@notifications.size}", notifications_path %></li>
+          <% end %>
       </ul>
     </div> <!-- collapse navbar-collapse -->
   </div> <!-- container-fluid -->

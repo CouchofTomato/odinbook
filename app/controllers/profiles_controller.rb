@@ -1,7 +1,15 @@
 class ProfilesController < ApplicationController
 
+  def index
+    @friendships = Friendship.all
+    @users = User.where.not(id: current_user.id)
+  end
+
   def show
     @profile = Profile.find(params[:id])
+    @user = @profile.user
+    @posts = @profile.user.posts
+    @posts = @profile.user.posts
   end
 
   def edit

@@ -60,17 +60,3 @@ Post.all.each do |post|
     post.comments.create(user: user, content: Faker::Lorem.sentence)
   end
 end
-
-user = User.create(
-    email: Faker::Internet.unique.email,
-    password: "password",
-    password_confirmation: "password"
-  )
-5.times do
-  user2 = User.create(
-    email: Faker::Internet.unique.email,
-    password: "password",
-    password_confirmation: "password"
-  )
-  user.friendships.create(friend: user2)
-end

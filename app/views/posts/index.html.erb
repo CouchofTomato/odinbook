@@ -1,5 +1,6 @@
+<%= link_to 'New Post', new_user_post_path %>
 <% @posts.each do |post| %>
-  <%= link_to(post_path(post)) do %>
+  <%= link_to(post_path(post), class: "post") do %>
     <p><%= post.author %></p>
     <p><%= post.content %></p>
   <% end %>

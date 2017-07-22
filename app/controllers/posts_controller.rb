@@ -14,13 +14,14 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    @likes = @post.likes.count
     @comments = @post.comments
   end
   
   def create
     @post = current_user.posts.new(post_params)
     if @post.save
-      redirect_to user_post_path(@post)
+      redirect_to post_path(@post)
     else
       render :new
     end

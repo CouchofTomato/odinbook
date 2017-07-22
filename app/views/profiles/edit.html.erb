@@ -1,0 +1,68 @@
+<%= form_for @profile do |f| %>
+  <% if @profile.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
+
+      <ul>
+      <% @profile.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <<% end %>
+  <div class="field">
+    <%= f.label :firstname %>
+    <%= f.text_field :firstname %> 
+  </div>
+  <div class="field">
+    <%= f.label :lastname %>
+    <%= f.text_field :lastname %>
+  </div>
+  <div>
+    <%= f.label "Date of Birth" %>
+    <%= f.date_field :date_of_birth %>
+  </div>
+  <div class="field">
+    <%= f.label :gender %>
+    <%= f.select :gender, ['Male', 'Female', 'Non-binary'] %>
+  </div>
+  <div class="field">
+    <%= f.label :website %>
+    <%= f.text_field :website %>
+  </div>
+  <div class="field">
+    <%= f.label :github_profile %>
+    <%= f.text_field :github_profile %>
+  </div>
+  <div class="field">
+    <%= f.label :phone_number %>
+    <%= f.telephone_field :phone_number %>
+  </div>
+  <div class="field">
+    <%= f.label :address_line_one %>
+    <%= f.text_field :address_line_one %>
+  </div>
+  <div class="field">
+    <%= f.label :address_line_two %>
+    <%= f.text_field :address_line_two %>
+  </div>
+  <div class="field">
+    <%= f.label :city %>
+    <%= f.text_field :city %>
+  </div>
+  <div class="field">
+    <%= f.label :country %>
+    <%= f.text_field :country %>
+  </div>
+  <div class="field">
+    <%= f.label :post_code %>
+    <%= f.text_field :post_code %>
+  </div>
+  <div class="field">
+    <%= f.label :odin_profile_link %>
+    <%= f.text_field :odin_profile_link %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Update" %>
+  </div>
+<% end %>

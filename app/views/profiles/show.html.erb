@@ -1,0 +1,41 @@
+<%= image_tag @user.gravatar_url %>
+<div>
+  <%= link_to "Edit Profile", edit_profile_path(@profile) %>
+</div>
+<div>
+  Name: <%= @profile.firstname %> <%= @profile.lastname %>
+</div>
+<div>
+  Date of Birth: <%= @profile.date_of_birth %>
+</div>
+<div>
+  Gender: <%= @profile.gender %>
+</div>
+<div>
+  <%= link_to "Website", "#{@profile.website}", target: "_blank", rel: "nofollow" %>
+</div>
+<div>
+  <%= link_to "Github Profile", "#{@profile.github_profile}", target: "_blank", rel: "nofollow" %>
+</div>
+<div>
+  Phone Number: <%= @profile.phone_number %>
+</div>
+<div>
+  <h4>Address</h4>
+  <%= @profile.address_line_one %>
+  <%= @profile.address_line_two %>
+  <%= @profile.city %>
+  <%= @profile.country %>
+  <%= @profile.post_code %>
+</div>
+<div>
+  <%= link_to "Odin Profile", "#{@profile.odin_profile_link}", target: "_blank", rel: "nofollow" %>
+</div>
+<div>
+  <h3>Posts</h3>
+</div>
+<% @posts.each do |post| %>
+  <div>
+    <%= link_to "#{post.content}", post_path(post) %>
+  </div>
+<% end %>

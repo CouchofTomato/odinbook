@@ -12,4 +12,8 @@ class Post < ApplicationRecord
   def author
     "#{self.user.profile.firstname} #{self.user.profile.lastname}"
   end
+
+  def liked_by? user
+    !(likes.where(user_id: user).empty?)
+  end
 end
