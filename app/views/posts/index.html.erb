@@ -1,7 +1,19 @@
-<%= link_to 'New Post', new_user_post_path %>
-<% @posts.each do |post| %>
-  <%= link_to(post_path(post), class: "post") do %>
-    <p><%= post.author %></p>
-    <p><%= post.content %></p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <h3><%= link_to 'Create New Post', new_user_post_path %></h3>
+    </div>
+  </div>
+  <% @posts.each do |post| %>
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
+        <%= link_to(post_path(post)) do %>
+          <div class="posts">
+            <div><%= post.author %></div>
+            <div><%= post.content %></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
   <% end %>
-<% end %>
+</div>
