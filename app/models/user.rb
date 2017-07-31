@@ -2,7 +2,7 @@ class User < ApplicationRecord
   include Gravtastic
   gravtastic size: 80, default: 'monsterid', rating: 'X'
   after_create :make_profile
-  after_create :send_welcome_email
+  #after_create :send_welcome_email
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
