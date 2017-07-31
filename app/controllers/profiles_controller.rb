@@ -20,7 +20,7 @@ class ProfilesController < ApplicationController
     @profile = Profile.find(params[:id])
     if @profile.update_attributes(profile_params)
       flash[:success] = "Profile successfully updated"
-      redirect_to user_profile_path
+      redirect_to profile_path(@profile)
     else
       flash.now[:error] = "You done fucked up pal."
       render :edit

@@ -19,6 +19,7 @@
             <li><%= link_to "Friends", user_friendships_path %></li>
             <li><%= link_to "Profiles", profiles_path %></li>
             <li><%= link_to "Notifications: #{@notifications.size}", notifications_path %></li>
+            <li><%= link_to "Edit Profile", edit_profile_path(current_user.profile) %></li>
           <% end %>
       </ul>
     </div> <!-- collapse navbar-collapse -->
