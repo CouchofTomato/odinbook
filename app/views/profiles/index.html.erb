@@ -1,7 +1,7 @@
 <% @users.each do |user| %>
   <div>
     <%= link_to "#{user.name}", profile_path(user.profile) %>
-    <% unless current_user.contacted?(user) %>
+    <% if !current_user.contacted?(user) %>
       <%= link_to "Add Friend", user_friendships_path(friend: user), method: :post %>
     <% end %>
   </div>

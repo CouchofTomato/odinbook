@@ -2,7 +2,43 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+a:hover {
+  text-decoration: none;
+}
+
 .posts {
-  border: 1px solid black;
+  border: 1px solid #cdcbcb;
+  border-radius: 5px;
+  box-shadow: 3px 3px;
   margin: 10px;
+  min-height: 75px;
+}
+
+.posts div {
+  margin: 5px;
+}
+
+.author {
+  color: #1c1a1b;
+}
+
+.content {
+  color: #0111a3;
+  font-weight: 600;
+}
+
+.comments {
+  margin-top: 20px;
+}
+
+.likes a {
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+  line-height: 25px;
+  background-color: #0019ff;
+  text-align: center;
+  color: #ff0000;
+  font-weight: 600;
+  border-radius: 3px;
 }

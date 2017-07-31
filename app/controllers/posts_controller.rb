@@ -28,10 +28,10 @@ class PostsController < ApplicationController
   end
   
   def update
-    @post = Post.find(params[:id])
+    @post = Post.find(params[:post][:id])
     if @post.update_attributes(post_params)
       flash[:notice] = "Post successfully updated"
-      redirect_to user_post_path(@post)
+      redirect_to post_path(@post)
     else
       flash.now[:alert] = "Could not update post"
       render :edit

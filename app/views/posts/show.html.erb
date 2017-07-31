@@ -1,23 +1,45 @@
-<div>
-  <%= link_to "#{@post.author}", profile_path(@post.user) %>
-</div>
-<div>
-  <%= @post.content %>
-</div>
-<div>
-  <p>Likes: <%= @likes %></p>
-</div>
-<div>
-  <% if @post.liked_by? (current_user) %>
-    <%= link_to "Unlike", user_post_like_path(@post), method: :delete %>
-  <% else %>
-    <%= link_to "Like", user_post_like_path(@post), method: :post %>
+<div class="container">
+  <% if current_user == @post.user %>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <%= link_to "Edit Post", edit_post_path(@post) %>
+      </div>
+    </div>
   <% end %>
-</div>
-<h3>Comments</h3>
-<% @comments.each do |comment| %>
-  <div>
-    <%= link_to "#{comment.author}", profile_path(comment.user) %>
-    <%= comment.content %>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <%= link_to "#{@post.author}", profile_path(@post.user.profile) %>
+    </div>
   </div>
-<% end %>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+    <p class="content"> <%= @post.content %></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="likes">
+        Likes: <%= @likes %>
+        <% if @post.liked_by? (current_user) %>
+          <%= link_to "Unlike", post_like_path(@post), method: :delete %>
+        <% else %>
+          <%= link_to "Like", post_like_path(@post), method: :post %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <%= link_to "Add new comment", new_post_comment_path(@post) %>
+      <fieldset class="comments">
+        <legend>Comments</legend>
+        <% @comments.each do |comment| %>
+          <div>
+            <%= link_to "#{comment.author}", profile_path(comment.user.profile) %>
+            <%= comment.content %>
+          </div>
+        <% end %>
+      </fieldset>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 <% @friends.each do |friend| %>
-  <%= link_to(user_friendship_path(friend)) do %>
-    <div><%= friend.profile.firstname %> <%=friend.profile.lastname %></div>
+  <%= link_to(profile_path(friend.profile)) do %>
+    <div><%= friend.firstname %> <%=friend.lastname %></div>
   <% end %>
 <% end %>

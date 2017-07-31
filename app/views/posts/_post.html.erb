@@ -1,4 +1,4 @@
-<%= form_for [current_user, @post] do |f| %>
+<%= form_for @post do |f| %>
   <% if @post.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>  
@@ -14,6 +14,7 @@
     <%= f.label :content %><br />
     <%= f.text_field :content %>
   </div>
+  <%= hidden_field(:post, :id) %>
   <div class="actions">
     <%= f.submit "Submit" %>
   </div>
